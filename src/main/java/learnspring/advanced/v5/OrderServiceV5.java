@@ -19,11 +19,9 @@ public class OrderServiceV5 {
     }
 
     public void orderItem(String itemId) {
-
         template.execute("OrderService.orderItem()", () -> {
             orderRepository.save(itemId);
             return null;
         });
-
     }
 }
