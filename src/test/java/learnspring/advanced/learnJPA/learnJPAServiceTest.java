@@ -2,6 +2,7 @@ package learnspring.advanced.learnJPA;
 
 import learnspring.advanced.learnJPA.repository.StudentJPARepository;
 import learnspring.advanced.learnJPA.repository.TeacherJPARepository;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,6 +26,7 @@ class learnJPAServiceTest {
 
     @Test
     @Rollback(false)
+    @Order(1)
     void associatedTest(){
         List<String> teacherNameList = new ArrayList<>();
         teacherNameList.add("jang");
@@ -31,4 +34,17 @@ class learnJPAServiceTest {
         Student student = new Student("YJ",teacherNameList);
         studentJPARepository.save(student);
     }
+
+
+    @Test
+    @Rollback(false)
+    @Order(2)
+    void associatedfindByTest(){
+        Optional<Student> student = studentJPARepository.findById(1L);
+        student.ifPresent(student1 -> {
+            assertEquals(student.get().getEnrollments().get(0).getTeacherId(),"jang");
+            assertEquals(student.get().getEnrollments().get(1).getTeacherId(),"young");
+        });
+    }
+
 }

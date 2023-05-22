@@ -1,6 +1,7 @@
 package learnspring.advanced.learnJPA;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Table(name = "enrollments")
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class Enrollment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
