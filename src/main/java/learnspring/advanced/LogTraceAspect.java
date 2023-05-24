@@ -24,10 +24,7 @@ public class LogTraceAspect  {
         try{
             String message = joinPoint.getSignature().toLongString();
             traceStatus = logTrace.begin(message);
-
-            //로직호출
             Object result = joinPoint.proceed();
-
             logTrace.end(traceStatus);
             return result;
         }catch (Exception e){
