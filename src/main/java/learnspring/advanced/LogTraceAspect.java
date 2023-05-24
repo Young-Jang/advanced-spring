@@ -22,7 +22,7 @@ public class LogTraceAspect  {
     public Object execute(ProceedingJoinPoint joinPoint) throws Throwable{
         TraceStatus traceStatus = null;
         try{
-            String message = joinPoint.getSignature().toShortString();
+            String message = joinPoint.getSignature().toLongString();
             traceStatus = logTrace.begin(message);
 
             //로직호출
