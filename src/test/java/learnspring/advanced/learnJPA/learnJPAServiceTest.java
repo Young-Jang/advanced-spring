@@ -20,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class learnJPAServiceTest {
 
     @Autowired
+    private LearnJPAService learnJPAService;
+    @Autowired
     private StudentJPARepository studentJPARepository;
     @Autowired
     private TeacherJPARepository teacherJPARepository;
@@ -45,6 +47,14 @@ class learnJPAServiceTest {
             assertEquals(student.get().getEnrollments().get(0).getTeacherId(),"jang");
             assertEquals(student.get().getEnrollments().get(1).getTeacherId(),"young");
         });
+    }
+
+    @Test
+    @Order(3)
+    void serviceQueryTest(){
+        Teacher teacher = learnJPAService.saveTeacher();
+        Student student = learnJPAService.saveStudent();
+        assertEquals(teacher.getName(), student.getEnrollments().get(0).getTeacherId());
     }
 
 }
