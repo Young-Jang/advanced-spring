@@ -50,8 +50,40 @@ class learnJPAServiceTest {
     }
 
     @Test
+    @Rollback(false)
+    @Order(4)
+    void associatedTest2(){
+        List<String> studentNameList = new ArrayList<>();
+        studentNameList.add("st1");
+        studentNameList.add("st2");
+        Teacher teacher = new Teacher("jang",studentNameList);
+        teacherJPARepository.save(teacher);
+    }
+
+
+    @Test
+    @Rollback(false)
+    @Order(5)
+    void associatedfindByTest2(){
+        Optional<Teacher> teacher = teacherJPARepository.findById(1L);
+        teacher.ifPresent(t -> {
+            assertEquals(t.getEnrollments().get(0).getTeacherId(),"st1");
+            assertEquals(t.getEnrollments().get(1).getTeacherId(),"st2");
+        });
+    }
+
+
+    @Test
     @Order(3)
     void serviceQueryTest(){
+        Teacher teacher = learnJPAService.saveTeacher();
+        Student student = learnJPAService.saveStudent();
+        assertEquals(teacher.getName(), student.getEnrollments().get(0).getTeacherId());
+    }
+
+    @Test
+    @Order(3)
+    void associatedfindByTest22(){
         Teacher teacher = learnJPAService.saveTeacher();
         Student student = learnJPAService.saveStudent();
         assertEquals(teacher.getName(), student.getEnrollments().get(0).getTeacherId());
